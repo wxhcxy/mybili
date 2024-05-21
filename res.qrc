@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/left_side_bar/background-color.png</file>
+        <file>icons/left_side_bar/email.png</file>
+        <file>icons/left_side_bar/home-page.png</file>
+        <file>icons/left_side_bar/my.png</file>
+        <file>icons/left_side_bar/night.png</file>
+        <file>icons/left_side_bar/set-up.png</file>
+        <file>icons/left_side_bar/trend.png</file>
+        <file>icons/left_side_bar/daytime.png</file>
+    </qresource>
+</RCC>
