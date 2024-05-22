@@ -110,6 +110,71 @@ ScrollView {
                     }
                 }
 
+
+                //键盘切换Frame选择视频start
+                scale: focus ? 1.08 : 1
+                focus: index === 0
+                Keys.onPressed: (event) =>{
+                                    switch (event.key) {
+                                        case Qt.Key_Right:
+                                        focusNextItemInRow()
+                                        break;
+                                        case Qt.Key_Left:
+                                        focusPreviousItemInRow()
+                                        break;
+                                        case Qt.Key_Down:
+                                        focusNextItemInColumn()
+                                        break;
+                                        case Qt.Key_Up:
+                                        focusPreviousItemInColumn()
+                                        break;
+                                        case Qt.Key_Return://Qt.Key_Return这个才是回车键Enter
+                                        //console.log("enter")
+                                        //playSignal(model.videoSource)//发射播放信号，携带视频信息参数
+                                        break;
+                                    }
+                                }
+                function focusNextItemInRow() {
+                    //var nextIndex = (index + 1) % 2
+                    if(index === gridModel.count-1)
+                    {//index的索引是从0开始的,所以要减一,gridModel.count获取Repeater的模型数量
+                        return//如果index === gridModel.count，表面焦点已经在最后一项，不能再向下一个切换
+                    }
+                    var nextIndex = index + 1
+                    getItem(nextIndex).forceActiveFocus()
+                    //getItem(nextIndex)是一个函数调用，它返回指定索引的子项。
+                    //forceActiveFocus()是一个用于强制设置焦点的方法，它将焦点设置在调用该方法的对象上，即下一个子项。
+                }
+                function focusPreviousItemInRow() {
+                    //var previousIndex = (index - 1 + 2) % 2
+                    if(index === 0){
+                        return//保证聚焦在第一项的时候不能再左移动
+                    }
+                    var previousIndex = index - 1
+                    getItem(previousIndex).forceActiveFocus()
+                }
+                function focusNextItemInColumn() {
+                    if(index >= gridModel.count - grid.columns)
+                    {
+                        return//如果index > gridModel.count - grid.columns，表面焦点已经在最后一行，不能再向下一行切换
+                    }
+
+                    var nextIndex = index + grid.columns //这里的grid.columns2代表一行有多少个元素
+                    getItem(nextIndex).forceActiveFocus()
+                }
+                function focusPreviousItemInColumn() {
+                    if(index < grid.columns){//这里的2代表一行有多少个元素
+                        return//保证聚焦在第一行的时候不能再向上移动
+                    }
+                    var previousIndex = index - grid.columns//这里的2代表一行有多少个元素
+                    getItem(previousIndex).forceActiveFocus()
+                }
+                function getItem(index) {
+                    //console.log(gridModel.count)
+                    return gridModel.itemAt(index)
+                }
+                //键盘切换Frame选择视频end
+
             }
         }
     }
