@@ -21,6 +21,9 @@ qt_add_qml_module(appmybili
     RESOURCES res.qrc
     QML_FILES HeadToolBar.qml
     QML_FILES RecommendPage.qml
+    SOURCES networkhttp.h networkhttp.cpp
+    SOURCES videodata.h videodata.cpp
+    SOURCES videomodel.h videomodel.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

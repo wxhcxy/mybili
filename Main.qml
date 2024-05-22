@@ -6,6 +6,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 
+
+
 ApplicationWindow{
     id:window
     width: 1200
