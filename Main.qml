@@ -38,6 +38,9 @@ ApplicationWindow{
                 id:headToolBar
                 height: 60
             }
+            RecommendPage{
+                id:recommendPage
+             }
         }
 
     }
