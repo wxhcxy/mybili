@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls 2.5
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 
 Frame{
@@ -144,6 +145,11 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    colorDialog.open()
+                }
+            }
         }
         Button{//夜晚白天背景切换
             id:night
@@ -243,6 +249,14 @@ Frame{
 
         }
 
+    }
+
+    //颜色对话框
+    ColorDialog {
+        id: colorDialog
+        onAccepted: {
+            console.log(colorDialog.selectedColor)//打印确定选中的颜色
+        }
     }
 
 }
