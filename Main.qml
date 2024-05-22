@@ -20,6 +20,16 @@ ApplicationWindow{
             width: 60
             height: parent.height
         }
+        Column{
+            width: parent.width-80
+            height: parent.height
+            //顶部工具栏
+            HeadToolBar{
+                id:headToolBar
+                height: 60
+            }
+        }
+
     }
 
 }
