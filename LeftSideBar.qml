@@ -11,6 +11,69 @@ Frame{
         color: "transparent"//color: "green"
     }
 
+    property int step: 1
+    Canvas{
+        id:canvas
+        width: window.width    //画布是整个窗口的大小
+        height: window.height
+        property int centerX: canvas.width/2
+        property int centerY: canvas.height/2
+        property int radius: 0
+
+        onPaint: {
+            var ctx = canvas.getContext("2d")
+            ctx.save()//ctx.save()与 ctx.restore()，只会在两者之间，ctx.restore()之后的ctx会恢复到ctx.save()之前的ctx
+            if(backgroundImage.source != ""){
+                ctx.drawImage(backgroundImage.source, 0, 0, backgroundImage.width, backgroundImage.height, 0, 0, canvas.width, canvas.height)//将图像绘制到目标画布上
+            }
+            clearArc(ctx, centerX, centerY, radius)//这个是后面自定义的js函数
+            ctx.restore()
+        }
+
+        function clearArc(ctx, x, y, radius){
+            ctx.beginPath() //开始一次绘制圆的路径
+            ctx.globalCompositeOperation = 'destination-out'
+            ctx.fillStyle = 'black'
+            ctx.arc(x, y, radius, 0, 2*Math.PI)
+            ctx.fill()
+            ctx.closePath() //结束一次绘制圆的路径
+        }
+        //定义一个名为clearArc的函数，用于在画布上清除圆形区域。
+        //设置绘图的全局组合操作为'destination-out'，填充颜色为黑色，绘制一个半径为radius的圆形，并进行填充。
+    }
+
+    Timer{
+        id:timer
+        interval: 5//可以控制圆形区域延伸的速度
+        repeat: true
+        onTriggered: {
+            if(canvas.radius >= Math.sqrt(Screen.width*Screen.width + Screen.height*Screen.height))
+            {//用screen桌面的对角线大小，以确保运行程序后，最大化窗口时，画布能够全部画完窗口
+                console.log("背景颜色改变完成")
+                timer.stop()
+            }
+            canvas.radius = canvas.radius + step
+            canvas.requestPaint()
+        }
+    }
+    //创建一个计时器，每隔5毫秒触发一次。在触发事件中，将画布的半径增加step值，并请求重绘画布。
+
+    function changeBackgoundColor(color)
+    {
+        var maxRadius = Math.sqrt(window.width*window.width + window.height*window.height)
+        step = maxRadius/100 //改变这个值的大小，可以改变圆形区域延伸的速度
+
+        backgroundWindow.grabToImage(function(result) {//grabToImage方法，用于将其内容保存为图像
+            backgroundImage.source = result.url
+            backgroundWindow.color = color
+            canvas.centerX = 0//这个0和window.height点，才是窗口的左下角
+            canvas.centerY = window.height
+            canvas.requestPaint()//会再次响应canvas的onPaint
+            canvas.radius = 0
+            timer.start()
+        })
+    }
+
 
     ColumnLayout{
         anchors.fill: parent//设置列布局为填充父级Frame的大小
@@ -188,6 +251,13 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    changeBackgoundColor("#000000")
+                    night.visible = false
+                    daytime.visible = true
+                }
+            }
         }
         Button{//夜晚白天背景切换
             id:daytime
@@ -226,6 +296,13 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    changeBackgoundColor("#ffffff")
+                    night.visible = true
+                    daytime.visible = false
+                }
+            }
         }
         Button{
             icon.source: "qrc:/icons/left_side_bar/set-up.png"
@@ -254,8 +331,9 @@ Frame{
     //颜色对话框
     ColorDialog {
         id: colorDialog
+        selectedColor: window.color // 初始颜色设置为当前窗口颜色
         onAccepted: {
-            console.log(colorDialog.selectedColor)//打印确定选中的颜色
+            changeBackgoundColor(colorDialog.selectedColor)//启用改变背景颜色的画布动画
         }
     }
 
