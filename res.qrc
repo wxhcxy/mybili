@@ -15,5 +15,9 @@
         <file>icons/video_process_slider/my.png</file>
         <file>icons/video_play_control/pause.png</file>
         <file>icons/video_play_control/play.png</file>
+        <file>icons/video_play_control/next-video.png</file>
+        <file>icons/video_play_control/my.png</file>
+        <file>icons/video_play_control/speed.png</file>
+        <file>icons/video_play_control/voice.png</file>
     </qresource>
 </RCC>

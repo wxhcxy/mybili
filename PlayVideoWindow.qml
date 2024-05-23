@@ -93,6 +93,96 @@ Window{
                                 playBtn.visible=true
                             }
                         }
+                        Button{
+                            icon.source: "qrc:/icons/video_play_control/next-video.png"
+                            icon.width: 30
+                            icon.height: 30
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                        }
+                        Text {
+                            text: {
+                                //进度条时间
+                                var milliseconds = mediaPlayer.position
+                                var minutes = Math.floor(milliseconds/60000)
+                                milliseconds-=minutes*60000
+                                var seconds = milliseconds/1000
+                                seconds = Math.round(seconds)
+                                var processTime=" "
+                                if(minutes<10){
+                                    if(seconds<10)
+                                        processTime = "0"+minutes+":0"+seconds
+                                    else
+                                        processTime = "0"+minutes+":"+seconds
+                                }
+                                else{
+                                    if(seconds<10)
+                                        processTime = minutes+":0"+seconds
+                                    else
+                                        processTime = minutes+":"+seconds
+                                }
+                                //视频总时长
+                                var durationMilliseconds = mediaPlayer.duration
+                                var durationMinutes = Math.floor(durationMilliseconds/60000)
+                                durationMilliseconds-=durationMinutes*60000
+                                var durationSeconds = durationMilliseconds/1000
+                                durationSeconds = Math.round(durationSeconds)
+                                var durationTime=" "
+                                if(durationMinutes<10){
+                                    if(durationSeconds<10)
+                                        durationTime = "0"+durationMinutes+":0"+durationSeconds
+                                    else
+                                        durationTime = "0"+durationMinutes+":"+durationSeconds
+                                }
+                                else{
+                                    if(durationSeconds<10)
+                                        processTime = durationMinutes+":0"+durationSeconds
+                                    else
+                                        processTime = durationMinutes+":"+durationSeconds
+                                }
+                                return processTime + " / " + durationTime//最后返回要显示在上面的时间文本信息
+                            }
+                            color: "#bfbfbf"
+                            font.family: "微软雅黑"
+                            font.pointSize: 12
+                        }
+                        Item {
+                            Layout.preferredWidth: parent.width/2
+                            Layout.fillHeight: true
+                        }
+                        Button{
+                            icon.source: "qrc:/icons/video_play_control/speed.png"
+                            icon.width: 32
+                            icon.height: 32
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                        }
+                        Button{
+                            icon.source: "qrc:/icons/video_play_control/voice.png"
+                            icon.width: 28
+                            icon.height: 28
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                        }
+                        Button{
+                            icon.source: "qrc:/icons/video_play_control/my.png"
+                            icon.width: 30
+                            icon.height: 30
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                        }
 
                     }
                 }
