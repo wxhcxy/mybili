@@ -4,8 +4,10 @@ import QtQuick.Layouts
 import QtQuick.Controls 2.5
 
 Window{
+    id:videoWindow
     property alias videoSource: mediaPlayer.source
     property alias mediaPlay: mediaPlayer
+    signal loaderLocalVideo()//加载本地视频列表项的信号
     width: 1300
     height: 700
     title: "播放"
@@ -14,9 +16,14 @@ Window{
         mediaPlayer.stop()
     }
 
+    RowLayout{
+        anchors.fill: parent
+
     Item {
-        width: parent.width*0.7
-        height: parent.height
+        // width: parent.width*0.7
+        // height: parent.height
+        Layout.preferredWidth: parent.width*0.7
+        Layout.preferredHeight:  parent.height
         Rectangle{//设置播放页左半部分的背景颜色
             anchors.fill: parent
             color: "black"
@@ -233,6 +240,43 @@ Window{
 
     }
 
+    /*右侧本地视频列表start*/
+    Item {
+        id:rightItem
+        Layout.preferredWidth: parent.width*0.28
+        Layout.fillWidth: true
+        Layout.preferredHeight: parent.height
+        Loader{
+            id:rightLoader
+            sourceComponent: Item {}//默认右侧加载空项。本地播放时，改变sourceComponent的值，从而加载本地视频列表项
+        }
+
+    }
+    Component{
+        id:localVideo
+        ListView{
+            id:localVideoListView
+            width: rightItem.width
+            height: rightItem.height
+            //anchors.fill: parent
+            model: 10
+            delegate: Rectangle{
+                width: localVideoListView.width
+                height: 200
+                color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.6)
+            }
+        }
+    }
+
+     /*右侧本地视频列表end*/
+
+}
+    Connections{
+        target: videoWindow
+        function onLoaderLocalVideo(){
+            rightLoader.sourceComponent = localVideo
+        }
+    }
 
 
 
