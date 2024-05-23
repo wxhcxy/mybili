@@ -57,7 +57,10 @@ ScrollView {
                     }
                     TapHandler{
                         onTapped: {
-                            console.log("播放视频")
+                            console.log(model.videoSource)
+                            playVideoWindow.videoSource = model.videoSource
+                            playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
+                            playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
                         }
                     }
                     NumberAnimation {

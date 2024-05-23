@@ -25,6 +25,12 @@ ApplicationWindow{
         visible: false
     }
 
+    PlayVideoWindow{
+        id:playVideoWindow
+    }
+
+
+
     Row{
         anchors.fill: parent
         LeftSideBar{
