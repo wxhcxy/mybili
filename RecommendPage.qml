@@ -37,7 +37,7 @@ ScrollView {
                 Rectangle{
                     id:videoCover
                     width: parent.width
-                    height: parent.height*0.7
+                    height: parent.height*0.64
                     radius: 30
                     border.width: 2
                     Image {
@@ -105,12 +105,25 @@ ScrollView {
                     wrapMode: Text.Wrap
                     anchors.top: videoCover.bottom
                     anchors.left: parent.left
-                    anchors.topMargin: parent.height*0.06
+                    anchors.topMargin: parent.height*0.04
                     HoverHandler{
                         onHoveredChanged: {
                             hovered ? parent.color="#f351c3" : parent.color="black"
                         }
                     }
+                }
+                Text {
+                    id: authorName
+                    text: model.authorName
+                    width: parent.width
+                    height: parent.height*0.2
+                    font.pointSize: 10
+                    font.family: "微软雅黑"
+                    wrapMode: Text.Wrap
+                    anchors.top: videoText.bottom
+                    anchors.left: parent.left
+                    anchors.topMargin: 4
+                    color: "#8a8a8a"
                 }
 
 
