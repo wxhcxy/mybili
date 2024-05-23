@@ -20,5 +20,6 @@
         <file>icons/video_play_control/speed.png</file>
         <file>icons/video_play_control/voice.png</file>
         <file>icons/left_side_bar/return.png</file>
+        <file>icons/grid_video/UP.png</file>
     </qresource>
 </RCC>

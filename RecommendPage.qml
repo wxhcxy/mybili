@@ -106,25 +106,55 @@ ScrollView {
                     anchors.top: videoCover.bottom
                     anchors.left: parent.left
                     anchors.topMargin: parent.height*0.04
+                    // Rectangle{
+                    //     anchors.fill: parent
+                    //     color: "blue"
+                    // }
                     HoverHandler{
                         onHoveredChanged: {
                             hovered ? parent.color="#f351c3" : parent.color="black"
                         }
                     }
                 }
-                Text {
-                    id: authorName
-                    text: model.authorName
+                RowLayout{
                     width: parent.width
                     height: parent.height*0.2
-                    font.pointSize: 10
-                    font.family: "微软雅黑"
-                    wrapMode: Text.Wrap
                     anchors.top: videoText.bottom
                     anchors.left: parent.left
-                    anchors.topMargin: 4
-                    color: "#8a8a8a"
+                    anchors.topMargin: 2
+                    spacing: 0
+                    Image {
+                        id: upIcon
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                        Layout.alignment: Qt.AlignTop
+                        Layout.topMargin: -2
+                        source: "qrc:/icons/grid_video/UP.png"
+                        // Rectangle{
+                        //     anchors.fill: parent
+                        //     color: "red"
+                        // }
+                    }
+                    Text {
+                        id: authorName
+                        text: model.authorName
+                        Layout.preferredWidth: 120
+                        Layout.preferredHeight: 20
+                        Layout.alignment: Qt.AlignTop
+                        Layout.topMargin: 1
+                        Layout.leftMargin: -18
+                        font.pointSize: 10
+                        font.family: "微软雅黑"
+                        wrapMode: Text.Wrap
+                        color: "#8a8a8a"
+                        // Rectangle{
+                        //     anchors.fill: parent
+                        //     color: "red"
+                        // }
+                    }
                 }
+
+
 
 
                 //键盘切换Frame选择视频start
