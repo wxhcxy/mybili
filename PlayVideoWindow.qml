@@ -70,6 +70,12 @@ Window{
                                         console.log("已继续播放")
                                     }
                                 }
+                                if (event.key=== Qt.Key_Right){
+                                    mediaPlayer.setPosition(mediaPlayer.position+2000)
+                                }
+                                if (event.key=== Qt.Key_Left){
+                                    mediaPlayer.setPosition(mediaPlayer.position-2000)
+                                }
 
                             }
 
