@@ -55,6 +55,11 @@ ToolBar{
                     hovered ? tooltext.visible=true : tooltext.visible=false
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         ToolButton{
             text: "热门"
@@ -79,6 +84,11 @@ ToolBar{
                     hovered ? tooltext2.visible=true : tooltext2.visible=false
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         ToolButton{
             text: "本地"
@@ -101,6 +111,11 @@ ToolBar{
             HoverHandler{
                 onHoveredChanged: {
                     hovered ? tooltext3.visible=true : tooltext3.visible=false
+                }
+            }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -140,6 +155,11 @@ ToolBar{
                     hovered ? minSizeBack.color="red" : minSizeBack.color="transparent"
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         ToolButton{
             font.pointSize: 14
@@ -155,6 +175,11 @@ ToolBar{
                     hovered ? maxSizeBack.color="red" : maxSizeBack.color="transparent"
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         ToolButton{
             font.pointSize: 14
@@ -168,6 +193,11 @@ ToolBar{
             HoverHandler{
                 onHoveredChanged: {
                     hovered ? closeBack.color="red" : closeBack.color="transparent"
+                }
+            }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }

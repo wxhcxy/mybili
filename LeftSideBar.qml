@@ -100,6 +100,11 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         Button{
             icon.source: "qrc:/icons/left_side_bar/trend.png"
@@ -122,6 +127,11 @@ Frame{
                         parent.icon.color = "#8a8a8a"//鼠标离开时按钮图标变色
                         parent.contentItem.color="#8a8a8a"//鼠标离开时按钮文本变色
                     }
+                }
+            }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -148,6 +158,11 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
         }
         Item {//这个item项，分割占位作用，空白项
             Layout.preferredHeight: parent.height/5
@@ -170,6 +185,11 @@ Frame{
                     if(!hovered){
                         parent.icon.color = "#8a8a8a"//鼠标离开时按钮图标变色
                     }
+                }
+            }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -211,6 +231,7 @@ Frame{
             TapHandler{
                 onTapped: {
                     colorDialog.open()
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -256,6 +277,7 @@ Frame{
                     changeBackgoundColor("#000000")
                     night.visible = false
                     daytime.visible = true
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -301,6 +323,7 @@ Frame{
                     changeBackgoundColor("#ffffff")
                     night.visible = true
                     daytime.visible = false
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -323,6 +346,12 @@ Frame{
                     }
                 }
             }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
+
 
         }
 
