@@ -213,7 +213,7 @@ ToolBar{
         acceptLabel: qsTr("选择视频")
         onAccepted: {
             //console.log(selectedFiles)//打印选择的视频数组
-            playVideoWindow.loaderLocalVideo()
+            playVideoWindow.loaderLocalVideo()//发射信号，播放视频窗口右侧更改为本地视频
             playVideoWindow.videoSource = selectedFiles[0]//选择视频后，默认播放数组里的第一个视频
             playVideoWindow.show()
             playVideoWindow.mediaPlay.play()
