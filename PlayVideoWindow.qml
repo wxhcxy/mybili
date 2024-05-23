@@ -55,6 +55,24 @@ Window{
                     mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                 }
             }
+            Keys.onPressed: (event) =>{//键盘快进退和暂停
+                                if(event.key === Qt.Key_Space){
+                                    if (mediaPlayer.playing){
+                                        mediaPlayer.pause()
+                                        pauseBtn.visible=false
+                                        playBtn.visible=true
+                                        console.log("已暂停")
+                                    }
+                                    else{
+                                        mediaPlayer.play()
+                                        playBtn.visible=false
+                                        pauseBtn.visible=true
+                                        console.log("已继续播放")
+                                    }
+                                }
+
+                            }
+
         }
 
 
