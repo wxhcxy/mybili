@@ -37,6 +37,24 @@ Window{
             anchors.verticalCenter: parent.verticalCenter
             focus: true
             fillMode: VideoOutput.PreserveAspectCrop
+            TapHandler{
+                id: videoMouseArea  //单击视频，暂停播放
+                onTapped: {
+                    if(mediaPlayer.playing)
+                    {
+                        pauseBtn.visible=false
+                        playBtn.visible=true
+                        console.log("已暂停")
+                    }
+                    if(!mediaPlayer.playing)
+                    {
+                        playBtn.visible=false
+                        pauseBtn.visible=true
+                        console.log("已继续播放")
+                    }
+                    mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
+                }
+            }
         }
 
 
