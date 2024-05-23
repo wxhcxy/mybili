@@ -78,6 +78,21 @@ Frame{
     ColumnLayout{
         anchors.fill: parent//设置列布局为填充父级Frame的大小
         Button{
+            icon.source: "qrc:/icons/left_side_bar/return.png"
+            icon.width: 30
+            icon.height: 30
+            Layout.alignment: Qt.AlignCenter//让按钮在ColumnLayout中水平居中
+            background: Rectangle{//设置按钮颜色为透明
+                anchors.fill: parent
+                color: "transparent"
+            }
+            TapHandler{
+                onTapped: {
+                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                }
+            }
+        }
+        Button{
             icon.source: "qrc:/icons/left_side_bar/home-page.png"
             icon.width: 30
             icon.height: 30
