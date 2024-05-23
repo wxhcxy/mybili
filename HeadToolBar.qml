@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls 2.5
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 ToolBar{
     width: parent.width
@@ -115,6 +116,7 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
+                    fileDialog.open()
                     recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
@@ -202,6 +204,19 @@ ToolBar{
             }
         }
 
+    }
+
+    FileDialog{
+        id:fileDialog
+        fileMode: FileDialog.OpenFiles//设置模式为选择多个文件
+        nameFilters: ["Video files(*.mp4)"] //过滤文件，只显示.mp4文件
+        acceptLabel: qsTr("选择视频")
+        onAccepted: {
+            //console.log(selectedFiles)//打印选择的视频数组
+            playVideoWindow.videoSource = selectedFiles[0]//选择视频后，默认播放数组里的第一个视频
+            playVideoWindow.show()
+            playVideoWindow.mediaPlay.play()
+        }
     }
 
 }
