@@ -134,6 +134,11 @@ ScrollView {
                                         case Qt.Key_Return://Qt.Key_Return这个才是回车键Enter
                                         //console.log("enter")
                                         //playSignal(model.videoSource)//发射播放信号，携带视频信息参数
+                                        {
+                                            playVideoWindow.videoSource = model.videoSource
+                                            playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
+                                            playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
+                                        }
                                         break;
                                     }
                                 }
