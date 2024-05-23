@@ -12,5 +12,8 @@
         <file>icons/head_tool_bar/close.png</file>
         <file>icons/head_tool_bar/max-size.png</file>
         <file>icons/head_tool_bar/min-size.png</file>
+        <file>icons/video_process_slider/my.png</file>
+        <file>icons/video_play_control/pause.png</file>
+        <file>icons/video_play_control/play.png</file>
     </qresource>
 </RCC>

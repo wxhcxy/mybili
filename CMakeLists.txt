@@ -25,6 +25,7 @@ qt_add_qml_module(appmybili
     SOURCES videodata.h videodata.cpp
     SOURCES videomodel.h videomodel.cpp
     QML_FILES PlayVideoWindow.qml
+    QML_FILES VideoProcessSlider.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

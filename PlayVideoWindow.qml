@@ -39,5 +39,70 @@ Window{
             fillMode: VideoOutput.PreserveAspectCrop
         }
 
+
+
+        Rectangle{
+            width: parent.width
+            anchors.top: videoOutPut.bottom
+            anchors.bottom:parent.bottom
+            anchors.left: parent.left
+            color:"black"
+            ColumnLayout{
+                anchors.fill: parent
+                VideoProcessSlider{
+                    id:videoProcessSlider
+                }
+                Rectangle{
+                    width: parent.width
+                    Layout.fillWidth: true//加上了这行代码，下面Item的Layout.preferredWidth: parent.width/2才起了作用
+                    Layout.fillHeight: true
+                    color: "transparent"
+                    RowLayout{
+                        anchors.fill: parent
+                        anchors.bottomMargin: 14
+                        Button{
+                            id:playBtn
+                            visible: false
+                            icon.source: "qrc:/icons/video_play_control/play.png"
+                            icon.width: 26
+                            icon.height: 26
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                            onClicked: {
+                                mediaPlayer.play()
+                                playBtn.visible=false
+                                pauseBtn.visible=true
+                            }
+                        }
+                        Button{
+                            id:pauseBtn
+                            icon.source: "qrc:/icons/video_play_control/pause.png"
+                            icon.width: 26
+                            icon.height: 26
+                            Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                            background: Rectangle{
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                            onClicked: {
+                                mediaPlayer.pause()
+                                pauseBtn.visible=false
+                                playBtn.visible=true
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
     }
+
+
+
+
+
 }
