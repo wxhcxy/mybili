@@ -31,23 +31,26 @@ ApplicationWindow{
 
 
 
-    Row{
+    RowLayout{
         anchors.fill: parent
         LeftSideBar{
-            width: 60
-            height: parent.height
+            Layout.preferredWidth: 60
+            Layout.preferredHeight: parent.height
             padding: 0//加上这个padding: 0，背景颜色画布动画才不会有左边和上边的方框
         }
-        Column{
-            width: parent.width-80
-            height: parent.height
+        ColumnLayout{
+            Layout.preferredWidth: parent.width-80
+            Layout.preferredHeight: parent.height
             //顶部工具栏
             HeadToolBar{
                 id:headToolBar
-                height: 60
+                Layout.preferredWidth: parent.width
+                Layout.preferredHeight: 60
             }
             RecommendPage{
                 id:recommendPage
+                Layout.preferredWidth: parent.width
+                Layout.preferredHeight: window.height-80
              }
         }
 

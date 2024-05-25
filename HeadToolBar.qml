@@ -4,9 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Dialogs
 
 ToolBar{
-    width: parent.width
     Layout.fillWidth: true
-    height: 60
     background: Rectangle{
         anchors.fill: parent
         color: "transparent"//"#bfbfbf"//transparent

@@ -10,8 +10,6 @@ import mybili //导入从c++注册的qml  有NetworkHttp类
 
 ScrollView {
     id:recommendScrollView
-    width: parent.width
-    height: parent.height
     clip:true
     focus: true//键盘切换Frame选择视频,要在ScrollView里加上这个，不然没有效果
 
@@ -138,11 +136,11 @@ ScrollView {
                     Text {
                         id: authorName
                         text: model.authorName
-                        Layout.preferredWidth: 120
+                        Layout.preferredWidth: 130
                         Layout.preferredHeight: 20
                         Layout.alignment: Qt.AlignTop
                         Layout.topMargin: 1
-                        Layout.leftMargin: -18
+                        Layout.leftMargin: -14
                         font.pointSize: 10
                         font.family: "微软雅黑"
                         wrapMode: Text.Wrap
