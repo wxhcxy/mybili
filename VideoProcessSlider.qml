@@ -43,12 +43,34 @@ Item {
         }
 
         handle:Image {//更改进度条句柄的图标
-                source: "qrc:/icons/video_process_slider/my.png" // 自定义图标的路径
-                width: 20
-                height: 20
-                x:slider.leftPadding+(slider.availableWidth-width)*slider.visualPosition
-                y:slider.topPadding+(slider.availableHeight-height)/2//这里的x,y是相对父窗口Slider的定位
-            }
+            source: "qrc:/icons/video_process_slider/my.png" // 自定义图标的路径
+            width: 20
+            height: 20
+            x:slider.leftPadding+(slider.availableWidth-width)*slider.visualPosition
+            y:slider.topPadding+(slider.availableHeight-height)/2//这里的x,y是相对父窗口Slider的定位
+        }
     }
+    Keys.onPressed: (event) =>{//键盘快进退和暂停
+                        if(event.key === Qt.Key_Space){
+                            if(mediaPlayer.playing)
+                            {
+                                mediaPlayer.pause()
+                                return
+                            }
+                            if(!mediaPlayer.playing)
+                            {
+                                mediaPlayer.play()
+                            }
+                            //因为用下面这行代码会显示一个js箭头函数的警告，所以改用上面的代码
+                            //mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
+                        }
+                        if (event.key=== Qt.Key_Right){
+                            mediaPlayer.setPosition(mediaPlayer.position+2000)
+                        }
+                        if (event.key=== Qt.Key_Left){
+                            mediaPlayer.setPosition(mediaPlayer.position-2000)
+                        }
+
+                    }
 
 }

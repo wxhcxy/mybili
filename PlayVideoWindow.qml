@@ -64,29 +64,6 @@ Window{
                         mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                     }
                 }
-                Keys.onPressed: (event) =>{//键盘快进退和暂停
-                                    if(event.key === Qt.Key_Space){
-                                        if(mediaPlayer.playing)
-                                        {
-                                            mediaPlayer.pause()
-                                            return
-                                        }
-                                        if(!mediaPlayer.playing)
-                                        {
-                                            mediaPlayer.play()
-                                        }
-                                        //因为用下面这行代码会显示一个js箭头函数的警告，所以改用上面的代码
-                                        //mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
-                                    }
-                                    if (event.key=== Qt.Key_Right){
-                                        mediaPlayer.setPosition(mediaPlayer.position+2000)
-                                    }
-                                    if (event.key=== Qt.Key_Left){
-                                        mediaPlayer.setPosition(mediaPlayer.position-2000)
-                                    }
-
-                                }
-
             }
 
 
@@ -122,6 +99,7 @@ Window{
                                 }
                                 onClicked: {
                                    previousVideo()
+                                   videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                 }
                             }
                             Button{
@@ -137,6 +115,7 @@ Window{
                                 }
                                 onClicked: {
                                     mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
+                                    videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                 }
                             }
                             Button{
@@ -150,6 +129,7 @@ Window{
                                 }
                                 onClicked: {
                                    nextVideo()
+                                   videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                 }
                             }
                             Text {
@@ -254,6 +234,7 @@ Window{
                 id:rightLoader
                 anchors.centerIn: parent
                 sourceComponent: networkVideo//默认右侧加载空项。本地播放时，改变sourceComponent的值，从而加载本地视频列表项
+                onLoaded: videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
             }
 
         }
