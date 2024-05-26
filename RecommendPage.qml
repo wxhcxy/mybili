@@ -10,6 +10,7 @@ import mybili //导入从c++注册的qml  有NetworkHttp类
 
 ScrollView {
     id:recommendScrollView
+    property alias videomodel: videoModel
     clip:true
     focus: true//键盘切换Frame选择视频,要在ScrollView里加上这个，不然没有效果
 
@@ -57,6 +58,8 @@ ScrollView {
                         onTapped: {
                             console.log(model.videoSource)
                             playVideoWindow.videoSource = model.videoSource
+                            //获取视频索引
+                            playVideoWindow.mediaPlay.index = videoModel.getIndex(model.videoSource)
                             playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
                             playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
                         }

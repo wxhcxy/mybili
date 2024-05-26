@@ -21,6 +21,10 @@ public:
 
     Q_INVOKABLE void processData(const QJsonArray &recommendVideos);
 
+    Q_INVOKABLE int getIndex(QUrl videoSource);
+
+    Q_INVOKABLE QUrl getSource(int index);
+
     enum Roles {
         titleRole = Qt::UserRole,
         authorNameRole,

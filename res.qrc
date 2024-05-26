@@ -23,5 +23,6 @@
         <file>icons/grid_video/UP.png</file>
         <file>icons/local_cover_control/pause.png</file>
         <file>icons/local_cover_control/play.png</file>
+        <file>icons/video_play_control/pre-video.png</file>
     </qresource>
 </RCC>

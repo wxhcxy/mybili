@@ -3,6 +3,8 @@ import QtMultimedia
 import QtQuick.Layouts
 import QtQuick.Controls 2.5
 
+import mybili //导入从c++注册的qml
+
 Window{
     id:videoWindow
     property alias videoSource: mediaPlayer.source
@@ -30,6 +32,7 @@ Window{
             MediaPlayer{
                 id : mediaPlayer
                 source: "http://localhost:3000/videos/recommend/video3.mp4"
+                property int index: 0
                 videoOutput: videoOutPut
                 audioOutput: AudioOutput { //开启视频的声音
                     id: audio
@@ -108,6 +111,20 @@ Window{
                             anchors.fill: parent
                             anchors.bottomMargin: 14
                             Button{
+                                icon.source: "qrc:/icons/video_play_control/pre-video.png"
+                                icon.width: 30
+                                icon.height: 30
+                                visible: mediaPlay.index !== 0
+                                Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                                background: Rectangle{
+                                    anchors.fill: parent
+                                    color: "black"
+                                }
+                                onClicked: {
+                                   previousVideo()
+                                }
+                            }
+                            Button{
                                 id:playBtn
                                 visible: true
                                 icon.source: "qrc:/icons/video_play_control/pause.png"
@@ -130,6 +147,9 @@ Window{
                                 background: Rectangle{
                                     anchors.fill: parent
                                     color: "black"
+                                }
+                                onClicked: {
+                                   nextVideo()
                                 }
                             }
                             Text {
@@ -322,6 +342,17 @@ Window{
         }
     }
 
+    function nextVideo(){
+        mediaPlay.index++
+        mediaPlay.source=recommendPage.videomodel.getSource(mediaPlay.index)
+        mediaPlay.play()
+    }
+
+    function previousVideo(){
+        mediaPlay.index--
+        mediaPlay.source=recommendPage.videomodel.getSource(mediaPlay.index)
+        mediaPlay.play()
+    }
 
 
 
