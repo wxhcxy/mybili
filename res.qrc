@@ -21,5 +21,7 @@
         <file>icons/video_play_control/voice.png</file>
         <file>icons/left_side_bar/return.png</file>
         <file>icons/grid_video/UP.png</file>
+        <file>icons/local_cover_control/pause.png</file>
+        <file>icons/local_cover_control/play.png</file>
     </qresource>
 </RCC>

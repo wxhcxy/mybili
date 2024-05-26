@@ -19,10 +19,8 @@ Window{
 
     RowLayout{
         anchors.fill: parent
-
+        spacing: 0
         Item {
-            // width: parent.width*0.7
-            // height: parent.height
             Layout.preferredWidth: parent.width*0.7
             Layout.preferredHeight:  parent.height
             Rectangle{//设置播放页左半部分的背景颜色
@@ -36,6 +34,18 @@ Window{
                 audioOutput: AudioOutput { //开启视频的声音
                     id: audio
                 }
+                onPlayingChanged: {//当视频播放状态发生改变时，触发此事件
+                    if(mediaPlayer.playing)
+                    {
+                        console.log("已暂停")
+                        playBtn.icon.source = "qrc:/icons/video_play_control/play.png"
+                    }
+                    if(!mediaPlayer.playing)
+                    {
+                        console.log("正在播放中")
+                        playBtn.icon.source = "qrc:/icons/video_play_control/pause.png"
+                    }
+                }
             }
             VideoOutput{
                 id: videoOutPut
@@ -48,35 +58,22 @@ Window{
                 TapHandler{
                     id: videoMouseArea  //单击视频，暂停播放
                     onTapped: {
-                        if(mediaPlayer.playing)
-                        {
-                            pauseBtn.visible=false
-                            playBtn.visible=true
-                            console.log("已暂停")
-                        }
-                        if(!mediaPlayer.playing)
-                        {
-                            playBtn.visible=false
-                            pauseBtn.visible=true
-                            console.log("已继续播放")
-                        }
                         mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                     }
                 }
                 Keys.onPressed: (event) =>{//键盘快进退和暂停
                                     if(event.key === Qt.Key_Space){
-                                        if (mediaPlayer.playing){
+                                        if(mediaPlayer.playing)
+                                        {
                                             mediaPlayer.pause()
-                                            pauseBtn.visible=false
-                                            playBtn.visible=true
-                                            console.log("已暂停")
+                                            return
                                         }
-                                        else{
+                                        if(!mediaPlayer.playing)
+                                        {
                                             mediaPlayer.play()
-                                            playBtn.visible=false
-                                            pauseBtn.visible=true
-                                            console.log("已继续播放")
                                         }
+                                        //因为用下面这行代码会显示一个js箭头函数的警告，所以改用上面的代码
+                                        //mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                                     }
                                     if (event.key=== Qt.Key_Right){
                                         mediaPlayer.setPosition(mediaPlayer.position+2000)
@@ -112,23 +109,7 @@ Window{
                             anchors.bottomMargin: 14
                             Button{
                                 id:playBtn
-                                visible: false
-                                icon.source: "qrc:/icons/video_play_control/play.png"
-                                icon.width: 26
-                                icon.height: 26
-                                Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
-                                background: Rectangle{
-                                    anchors.fill: parent
-                                    color: "black"
-                                }
-                                onClicked: {
-                                    mediaPlayer.play()
-                                    playBtn.visible=false
-                                    pauseBtn.visible=true
-                                }
-                            }
-                            Button{
-                                id:pauseBtn
+                                visible: true
                                 icon.source: "qrc:/icons/video_play_control/pause.png"
                                 icon.width: 26
                                 icon.height: 26
@@ -138,9 +119,7 @@ Window{
                                     color: "black"
                                 }
                                 onClicked: {
-                                    mediaPlayer.pause()
-                                    pauseBtn.visible=false
-                                    playBtn.visible=true
+                                    mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                                 }
                             }
                             Button{
@@ -247,8 +226,13 @@ Window{
             Layout.preferredWidth: parent.width*0.28
             Layout.fillWidth: true
             Layout.preferredHeight: parent.height
+            Rectangle{
+                anchors.fill: parent
+                color: "#7c8c99"
+            }
             Loader{
                 id:rightLoader
+                anchors.centerIn: parent
                 sourceComponent: networkVideo//默认右侧加载空项。本地播放时，改变sourceComponent的值，从而加载本地视频列表项
             }
 
@@ -263,16 +247,70 @@ Window{
             id:localVideo
             ListView{
                 id:localVideoListView
-                width: rightItem.width
+                width: rightItem.width*0.88
                 height: rightItem.height
-                //anchors.fill: parent
-                model: 10
-                delegate: Rectangle{
+                topMargin: 18
+                spacing: 16
+                model:10
+                delegate: Image {
+                    id:localCoverImage
                     width: localVideoListView.width
-                    height: 200
-                    color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.6)
+                    height: localVideoListView.width*0.6
+                    smooth: true//smooth: true启用了图像的平滑处理。
+                    fillMode: Image.PreserveAspectCrop//填充模式，保持宽高比填充整个元素
+                    antialiasing: true//antialiasing: true启用了图像的抗锯齿处理。
+                    source: "http://localhost:3000/images/recommendImages/recommendImage11.png"
+                    //本地播放右侧显示的本地视频的封面图片
+                    Image {
+                        id: localPlayIcon
+                        width: 90
+                        height: 90
+                        visible: false
+                        anchors.centerIn: parent
+                        source: model.index ===currentIndex? (mediaPlayer.playing ? "qrc:/icons/local_cover_control/play.png" : "qrc:/icons/local_cover_control/pause.png"):"qrc:/icons/local_cover_control/play.png"
+                        //这行代码监听播放状态并更新封面的播放暂停图标
+                    }
+                    //     Rectangle{
+                    //     width: localVideoListView.width
+                    //     height: 200
+                    //     color: Qt.rgba(Math.random(), Math.random(), Math.random(), 0.6)
+                    // }
+                    HoverHandler{
+                        onHoveredChanged: {
+                            if(hovered){
+                                localPlayIcon.visible = true
+                                scaleEnlargeLocalAnimation.running=true
+                            }
+                            if(!hovered){
+                                localPlayIcon.visible = false
+                                scaleReducegeLocalAnimation.running=true
+                            }
+                        }
+                    }
+                    TapHandler{
+                        onTapped: {
+                            mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
+                        }
+                    }
+
+                    NumberAnimation {
+                        id: scaleEnlargeLocalAnimation//封面放大动画
+                        target: localCoverImage
+                        property: "scale"
+                        to: 1.06
+                        duration:100 // 动画持续时间为0.1秒
+                    }
+                    NumberAnimation {
+                        id: scaleReducegeLocalAnimation//封面缩小动画
+                        target: localCoverImage
+                        property: "scale"
+                        to: 1.0
+                        duration:100 // 动画持续时间为0.1秒
+                    }
+
                 }
             }
+
         }
         /*播放窗口右侧显示内容，本地视频列表end*/
 
