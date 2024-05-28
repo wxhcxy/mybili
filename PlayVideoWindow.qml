@@ -64,6 +64,28 @@ Window{
                         mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                     }
                 }
+                Keys.onPressed: (event) =>{//键盘快进退和暂停
+                                    if(event.key === Qt.Key_Space){
+                                        if(mediaPlayer.playing)
+                                        {
+                                            mediaPlayer.pause()
+                                            return
+                                        }
+                                        if(!mediaPlayer.playing)
+                                        {
+                                            mediaPlayer.play()
+                                        }
+                                        //因为用下面这行代码会显示一个js箭头函数的警告，所以改用上面的代码
+                                        //mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
+                                    }
+                                    if (event.key=== Qt.Key_Right){
+                                        mediaPlayer.setPosition(mediaPlayer.position+2000)
+                                    }
+                                    if (event.key=== Qt.Key_Left){
+                                        mediaPlayer.setPosition(mediaPlayer.position-2000)
+                                    }
+
+                                }
             }
 
 
