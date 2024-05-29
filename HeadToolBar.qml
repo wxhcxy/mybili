@@ -46,7 +46,6 @@ ToolBar{
                 anchors.top: parent.bottom
                 anchors.topMargin: -24
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: false
                 font.pointSize: 30
             }
             HoverHandler{
@@ -56,7 +55,11 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    console.log(stackView.depth)
+                    stackView.replace("RecommendPage.qml")
+                    //stackView.push("RecommendPage.qml")
+                    stackView.forceActiveFocus()
+                    //recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
         }
@@ -85,7 +88,9 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    console.log(stackView.depth)
+                    stackView.replace("PopularPage.qml")
+                    stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
         }

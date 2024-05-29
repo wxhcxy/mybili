@@ -8,7 +8,8 @@ Frame{
     id:leftSideBar
     Layout.fillHeight: true
     background: Rectangle{//设置左侧栏的背景颜色为透明
-        color: "transparent"//color: "green"
+        color: backgroundWindow.color
+        //color: "transparent"//color: "green"
     }
 
     property int step: 1
