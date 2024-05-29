@@ -346,15 +346,15 @@ Window{
     }
 
     function nextVideo(){
-        mediaPlay.index++
-        mediaPlay.source=recommendPage.videomodel.getSource(mediaPlay.index)
-        mediaPlay.play()
+        mediaPlayer.index++
+        mediaPlayer.source=recommendPage.videoModelAlias.getSource(mediaPlayer.index)
+        mediaPlayer.play()
     }
 
     function previousVideo(){
-        mediaPlay.index--
-        mediaPlay.source=recommendPage.videomodel.getSource(mediaPlay.index)
-        mediaPlay.play()
+        mediaPlayer.index--
+        mediaPlayer.source=recommendPage.videoModelAlias.getSource(mediaPlayer.index)
+        mediaPlayer.play()
     }
 
 

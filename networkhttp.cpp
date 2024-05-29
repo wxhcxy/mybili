@@ -15,9 +15,14 @@ NetworkHttp::NetworkHttp(QObject *parent)
 
 void NetworkHttp::onReplied(QNetworkReply *reply)
 {
-    emit replySignal(reply->readAll());//3
+    QByteArray QByteArray = reply->readAll();
+    //qDebug()<<QByteArray.data();
+    emit replySignal(QByteArray.data());//3
+    reply->deleteLater();
+    //qDebug()<<reply->readAll();
     //发送一个自定义信号，在需要接受数据的地方，绑定信号
     //reply->readAll()返回一个字符串
+    //reply->readAll()触发一次之后,仅返回一次数据，再调用该函数数据是空的
 }
 
 
