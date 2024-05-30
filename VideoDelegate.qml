@@ -8,12 +8,11 @@ import Qt5Compat.GraphicalEffects
 Frame{
     property alias textColor: videoText.color//这两行设置键盘焦点在子项的时候更换视频文字颜色
     textColor: focus?"#f351c3":"#000000"//这两行设置键盘焦点在子项的时候更换视频文字颜色
-    width: window.width*0.2
-    height: window.width*0.18
+    implicitWidth: (window.width-60)*0.22
+    implicitHeight: (window.width-60)*0.2
     padding: 0//Frame有内边距
     background: Rectangle{
         anchors.fill: parent
-        //radius: 8
         color: "transparent"//加上这个背景，让Frame的边框消失
     }
     Rectangle{
@@ -42,9 +41,10 @@ Frame{
                 console.log(model.videoSource)
                 playVideoWindow.videoSource = model.videoSource
                 //获取视频索引
-                playVideoWindow.mediaPlay.index = gridModel.model.getIndex(model.videoSource)
+                playVideoWindow.mediaPlay.index = gridView.model.getIndex(model.videoSource)
                 playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
                 playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
+                playVideoWindow.videoOutPutAlias.forceActiveFocus()//进入播放窗口后，将键盘焦点给播放窗口，控制快进后退等
             }
         }
         NumberAnimation {
@@ -146,68 +146,18 @@ Frame{
     focus: index === 0
     Keys.onPressed: (event) =>{
                         switch (event.key) {
-                            case Qt.Key_Right:
-                            focusNextItemInRow()
-                            break;
-                            case Qt.Key_Left:
-                            focusPreviousItemInRow()
-                            break;
-                            case Qt.Key_Down:
-                            focusNextItemInColumn()
-                            break;
-                            case Qt.Key_Up:
-                            focusPreviousItemInColumn()
-                            break;
                             case Qt.Key_Return://Qt.Key_Return这个才是回车键Enter
                             //console.log("enter")
                             //playSignal(model.videoSource)//发射播放信号，携带视频信息参数
                             {
+                                console.log(model.videoSource)
                                 playVideoWindow.videoSource = model.videoSource
                                 playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
                                 playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
+                                playVideoWindow.videoOutPutAlias.forceActiveFocus()//进入播放窗口后，将键盘焦点给播放窗口，控制快进后退等
                             }
                             break;
                         }
                     }
-    function focusNextItemInRow() {
-        //var nextIndex = (index + 1) % 2
-        if(index === gridModel.count-1)
-        {//index的索引是从0开始的,所以要减一,gridModel.count获取Repeater的模型数量
-            return//如果index === gridModel.count，表面焦点已经在最后一项，不能再向下一个切换
-        }
-        var nextIndex = index + 1
-        getItem(nextIndex).forceActiveFocus()
-        //getItem(nextIndex)是一个函数调用，它返回指定索引的子项。
-        //forceActiveFocus()是一个用于强制设置焦点的方法，它将焦点设置在调用该方法的对象上，即下一个子项。
-    }
-    function focusPreviousItemInRow() {
-        //var previousIndex = (index - 1 + 2) % 2
-        if(index === 0){
-            return//保证聚焦在第一项的时候不能再左移动
-        }
-        var previousIndex = index - 1
-        getItem(previousIndex).forceActiveFocus()
-    }
-    function focusNextItemInColumn() {
-        if(index >= gridModel.count - grid.columns)
-        {
-            return//如果index > gridModel.count - grid.columns，表面焦点已经在最后一行，不能再向下一行切换
-        }
-
-        var nextIndex = index + grid.columns //这里的grid.columns2代表一行有多少个元素
-        getItem(nextIndex).forceActiveFocus()
-    }
-    function focusPreviousItemInColumn() {
-        if(index < grid.columns){//这里的2代表一行有多少个元素
-            return//保证聚焦在第一行的时候不能再向上移动
-        }
-        var previousIndex = index - grid.columns//这里的2代表一行有多少个元素
-        getItem(previousIndex).forceActiveFocus()
-    }
-    function getItem(index) {
-        //console.log(gridModel.count)
-        return gridModel.itemAt(index)
-    }
-    //键盘切换Frame选择视频end
 
 }

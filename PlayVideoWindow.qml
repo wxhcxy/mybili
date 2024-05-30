@@ -9,6 +9,7 @@ Window{
     id:videoWindow
     property alias videoSource: mediaPlayer.source
     property alias mediaPlay: mediaPlayer
+    property alias videoOutPutAlias: videoOutPut
     signal loaderLocalVideo()//加载本地视频列表项的信号
     width: 1300
     height: 700
@@ -346,14 +347,17 @@ Window{
     }
 
     function nextVideo(){
+        //console.log(stackView.currentItem.videoModelAlias.currentIndex)
+        //console.log(stackView.currentItem.gridModelAlias[2])
         mediaPlayer.index++
-        mediaPlayer.source=recommendPage.videoModelAlias.getSource(mediaPlayer.index)
+        mediaPlayer.source=stackView.currentItem.videoModelAlias.getSource(mediaPlayer.index)
         mediaPlayer.play()
     }
 
     function previousVideo(){
+        //console.log(stackView.currentItem.videoModelAlias.currentIndex)
         mediaPlayer.index--
-        mediaPlayer.source=recommendPage.videoModelAlias.getSource(mediaPlayer.index)
+        mediaPlayer.source=stackView.currentItem.videoModelAlias.getSource(mediaPlayer.index)
         mediaPlayer.play()
     }
 

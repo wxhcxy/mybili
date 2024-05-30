@@ -7,7 +7,7 @@ ToolBar{
     Layout.fillWidth: true
     background: Rectangle{
         anchors.fill: parent
-        color: "transparent"//"#bfbfbf"//transparent
+        color: backgroundWindow.color//color: "transparent"//"#bfbfbf"//transparent
     }
     RowLayout{
         anchors.fill: parent//加上这个，toolbar里的子项垂直居中
@@ -120,7 +120,7 @@ ToolBar{
             TapHandler{
                 onTapped: {
                     fileDialog.open()
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
         }
@@ -162,7 +162,7 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
         }
@@ -182,7 +182,7 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
         }
@@ -202,7 +202,7 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
         }

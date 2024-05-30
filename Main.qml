@@ -19,6 +19,7 @@ ApplicationWindow{
     Rectangle{
         id:backgroundWindow
         anchors.fill: parent
+        z:-1
     }
     Image {
         id: backgroundImage
@@ -47,6 +48,8 @@ ApplicationWindow{
                 id:headToolBar
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 60
+                Layout.topMargin: -1//发现顶部有点缝隙
+                z:1
             }
             StackView {
                 id: stackView

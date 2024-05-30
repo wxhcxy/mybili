@@ -7,50 +7,44 @@ import Qt5Compat.GraphicalEffects
 
 import mybili //导入从c++注册的qml  有NetworkHttp类
 
-
-ScrollView {
+GridView {
+    id: gridView
     property alias videoModelAlias: videoModel
-    clip:true
-    focus: true//键盘切换Frame选择视频,要在ScrollView里加上这个，不然没有效果
+    focus: true
+    leftMargin: window.width*0.02
+    cellWidth: (window.width-60)*0.24
+    cellHeight:(window.width-60)*0.22
+    //model: videoModel
+    ScrollBar.vertical: ScrollBar{}//给GridView加上一个垂直的滚动条
 
-    Grid{
-        id:grid
-        leftPadding: parent.width*0.055
-        topPadding: 30
-        columns: 4
-        spacing: 20
-        Repeater{
-            id:gridModel
-            delegate: VideoDelegate{
-
-            }
-        }
+    delegate: VideoDelegate {}
+    NetworkHttp {
+        id: networkHttp
     }
-
-
-    NetworkHttp{
-        id:networkHttp
-    }
-    VideoModel{
-        id:videoModel
+    VideoModel {
+        id: videoModel
     }
 
     //http网络请求，拿到视频数据
     Component.onCompleted: {
         getVideosList()
+        console.log("RecommendPage.qml In GridView")
     }
-    function getVideosList(){
-        function onReply(reply){//这里的reply参数，是有networkputils.cpp中的replySignal信号发送传递过来的
+
+    function getVideosList() {
+        function onReply(reply) { //这里的reply参数，是有networkputils.cpp中的replySignal信号发送传递过来的
             networkHttp.onReplySignal.disconnect(onReply);
-            var recommendVideos = JSON.parse(reply).recommendVideos//将string转成json数据
-            videoModel.processData(recommendVideos)//将请求到的数据传递给playercontroller的m_videosList
-            gridModel.model = videoModel
+            var recommendVideos = JSON.parse(reply).recommendVideos //将string转成json数据
+            videoModel.processData(recommendVideos) //将请求到的数据传递给playercontroller的m_videosList
+            gridView.model = videoModel
+            console.log(gridView.count)
+            console.log(currentIndex)
         }
         //绑定一个信号replySignal
-        networkHttp.onReplySignal.connect(onReply);//绑定一个信号replySignal,要加on,首字母大写R
+        networkHttp.onReplySignal.connect(onReply); //绑定一个信号replySignal,要加on,首字母大写R
         networkHttp.sendRequest("recommend");
     }
-
-
-
 }
+
+
+
