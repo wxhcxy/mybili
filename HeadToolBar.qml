@@ -38,6 +38,11 @@ ToolBar{
                 anchors.fill: parent
                 color: "transparent"
             }
+            contentItem: Text{
+                text:parent.text
+                font.pointSize: 14
+                color: "black"
+            }
 
             Text {
                 id:tooltext
@@ -70,6 +75,11 @@ ToolBar{
                 anchors.fill: parent
                 color: "transparent"
             }
+            contentItem: Text{
+                text:parent.text
+                font.pointSize: 14
+                color: "black"
+            }
 
             Text {
                 id:tooltext2
@@ -100,6 +110,11 @@ ToolBar{
             background: Rectangle{//按钮背景透明
                 anchors.fill: parent
                 color: "transparent"
+            }
+            contentItem: Text{
+                text:parent.text
+                font.pointSize: 14
+                color: "black"
             }
 
             Text {

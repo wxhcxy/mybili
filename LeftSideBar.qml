@@ -15,8 +15,8 @@ Frame{
     property int step: 1
     Canvas{
         id:canvas
-        width: window.width    //画布是整个窗口的大小
-        height: window.height
+        width: window.width*1.5    //画布是整个窗口的大小
+        height: window.height*1.5
         property int centerX: canvas.width/2
         property int centerY: canvas.height/2
         property int radius: 0

@@ -42,12 +42,12 @@ Window{
                     if(mediaPlayer.playing)
                     {
                         console.log("已暂停")
-                        playBtn.icon.source = "qrc:/icons/video_play_control/play.png"
+                        playBtn.icon.source = "qrc:/icons/video_play_control/pause.png"
                     }
                     if(!mediaPlayer.playing)
                     {
                         console.log("正在播放中")
-                        playBtn.icon.source = "qrc:/icons/video_play_control/pause.png"
+                        playBtn.icon.source = "qrc:/icons/video_play_control/play.png"
                     }
                 }
             }
