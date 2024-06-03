@@ -69,4 +69,10 @@ ApplicationWindow{
         Layout.preferredHeight: window.height-80
     }
 
+    PopularPage{
+        id:popularPage
+        Layout.preferredWidth: parent.width
+        Layout.preferredHeight: window.height-80
+    }
+
 }

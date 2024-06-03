@@ -61,8 +61,7 @@ ToolBar{
             TapHandler{
                 onTapped: {
                     console.log(stackView.depth)
-                    stackView.replace("RecommendPage.qml")
-                    //stackView.push("RecommendPage.qml")
+                    stackView.pop()//初始项是recommendPage,所有不用再push(recommendPage)
                     stackView.forceActiveFocus()
                     //recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
@@ -99,7 +98,8 @@ ToolBar{
             TapHandler{
                 onTapped: {
                     console.log(stackView.depth)
-                    stackView.replace("PopularPage.qml")
+                    stackView.pop()
+                    stackView.push(popularPage)
                     stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
                 }
             }
