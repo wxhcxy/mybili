@@ -156,6 +156,7 @@ ToolBar{
             placeholderText: "搜索"
             placeholderTextColor: "#adb6b6"
             onAccepted: {
+                findpage.open()
                 console.log(text)//按enter键后，会打印当前TextField中输入的文本text
             }
         }

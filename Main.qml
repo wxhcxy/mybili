@@ -74,5 +74,8 @@ ApplicationWindow{
         Layout.preferredWidth: parent.width
         Layout.preferredHeight: window.height-80
     }
-
+    FindPage{
+        id:findpage
+        anchors.centerIn:parent
+    }
 }
