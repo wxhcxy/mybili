@@ -56,24 +56,30 @@ ApplicationWindow{
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: window.height-80
                 focus: true
-                initialItem:recommendPage//"RecommendPage.qml"//recommendPage
+                initialItem:recommend_Page//"RecommendPage.qml"//recommendPage
 
             }
         }
-
     }
 
-    RecommendPage{
-        id:recommendPage
-        Layout.preferredWidth: parent.width
-        Layout.preferredHeight: window.height-80
+    Component{
+        id:recommend_Page
+        RecommendPage{
+            id:recommendPage
+            Layout.preferredWidth: stackView.width
+            Layout.preferredHeight: window.height-80
+        }
     }
 
-    PopularPage{
-        id:popularPage
-        Layout.preferredWidth: parent.width
-        Layout.preferredHeight: window.height-80
+    Component{
+        id:popular_Page
+        PopularPage{
+            id:popularPage
+            Layout.preferredWidth: stackView.width
+            Layout.preferredHeight: window.height-80
+        }
     }
+
     FindPage{
         id:findpage
         anchors.centerIn:parent

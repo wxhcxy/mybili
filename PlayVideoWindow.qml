@@ -115,7 +115,7 @@ Window{
                                 icon.source: "qrc:/icons/video_play_control/pre-video.png"
                                 icon.width: 30
                                 icon.height: 30
-                                visible: mediaPlay.index !== 0
+                                visible: mediaPlayer.index !== 0
                                 Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
                                 background: Rectangle{
                                     anchors.fill: parent
@@ -124,7 +124,7 @@ Window{
                                 TapHandler {
                                    onTapped: {
                                    previousVideo()
-                                   videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                   videoOutPut.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                 }
                               }
                             }
@@ -142,7 +142,7 @@ Window{
                                 TapHandler {
                                    onTapped: {
                                     mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
-                                    videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                    videoOutPut.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                    }
                                 }
                             }
@@ -158,7 +158,7 @@ Window{
                                 TapHandler {
                                    onTapped: {
                                    nextVideo()
-                                   videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                   videoOutPut.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                    }
                                 }
                             }
@@ -198,9 +198,9 @@ Window{
                                     }
                                     else{
                                         if(durationSeconds<10)
-                                            processTime = durationMinutes+":0"+durationSeconds
+                                            durationTime = durationMinutes+":0"+durationSeconds
                                         else
-                                            processTime = durationMinutes+":"+durationSeconds
+                                            durationTime = durationMinutes+":"+durationSeconds
                                     }
                                     return processTime + " / " + durationTime//最后返回要显示在上面的时间文本信息
                                 }

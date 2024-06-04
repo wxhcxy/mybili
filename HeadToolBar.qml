@@ -60,9 +60,10 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    console.log(stackView.depth)
                     stackView.pop()//初始项是recommendPage,所有不用再push(recommendPage)
                     stackView.forceActiveFocus()
+                    console.log("stackView.depth: "+stackView.depth)
+                    console.log(stackView.currentItem)
                     //recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
                 }
             }
@@ -97,10 +98,11 @@ ToolBar{
             }
             TapHandler{
                 onTapped: {
-                    console.log(stackView.depth)
                     stackView.pop()
-                    stackView.push(popularPage)
+                    stackView.push(popular_Page)
                     stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
+                    console.log("stackView.depth: "+stackView.depth)
+                    console.log(stackView.currentItem)
                 }
             }
         }

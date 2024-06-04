@@ -89,7 +89,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -118,7 +118,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -147,7 +147,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -176,7 +176,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -205,7 +205,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -247,7 +247,7 @@ Frame{
             TapHandler{
                 onTapped: {
                     colorDialog.open()
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -293,7 +293,7 @@ Frame{
                     changeBackgoundColor("#000000")
                     night.visible = false
                     daytime.visible = true
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -339,7 +339,7 @@ Frame{
                     changeBackgoundColor("#ffffff")
                     night.visible = true
                     daytime.visible = false
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
         }
@@ -364,7 +364,7 @@ Frame{
             }
             TapHandler{
                 onTapped: {
-                    recommendPage.forceActiveFocus() //在点击该按钮时，将焦点给到grid上，每个按钮都加了这行代码
+                    stackView.forceActiveFocus()//将焦点给到stackView上
                 }
             }
 
