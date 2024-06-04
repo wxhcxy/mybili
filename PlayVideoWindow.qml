@@ -34,6 +34,7 @@ Window{
                 id : mediaPlayer
                 source: "http://localhost:3000/videos/recommend/video3.mp4"
                 property int index: 0
+                playbackRate: 1
                 videoOutput: videoOutPut
                 audioOutput: AudioOutput { //开启视频的声音
                     id: audio
@@ -120,10 +121,12 @@ Window{
                                     anchors.fill: parent
                                     color: "black"
                                 }
-                                onClicked: {
+                                TapHandler {
+                                   onTapped: {
                                    previousVideo()
                                    videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
                                 }
+                              }
                             }
                             Button{
                                 id:playBtn
@@ -136,9 +139,11 @@ Window{
                                     anchors.fill: parent
                                     color: "black"
                                 }
-                                onClicked: {
+                                TapHandler {
+                                   onTapped: {
                                     mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                                     videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                   }
                                 }
                             }
                             Button{
@@ -150,9 +155,11 @@ Window{
                                     anchors.fill: parent
                                     color: "black"
                                 }
-                                onClicked: {
+                                TapHandler {
+                                   onTapped: {
                                    nextVideo()
                                    videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                   }
                                 }
                             }
                             Text {
@@ -205,16 +212,81 @@ Window{
                                 Layout.preferredWidth: parent.width/2
                                 Layout.fillHeight: true
                             }
-                            Button{
+                            Button {
+                                id: speedBtn
                                 icon.source: "qrc:/icons/video_play_control/speed.png"
                                 icon.width: 32
                                 icon.height: 32
-                                Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                                Layout.alignment: Qt.AlignVCenter  //让按钮在ColumnLayout中垂直居中
                                 background: Rectangle{
                                     anchors.fill: parent
                                     color: "black"
                                 }
+                                TapHandler {
+                                   onTapped: {
+                                    speedPopup.x = speedBtn.x + speedBtn.width/2 - speedPopup.width/2
+                                    speedPopup.y = speedBtn.y - speedBtn.height*6
+                                    speedPopup.open()
+                                }
+                              }
                             }
+
+                            Popup {
+                                id: speedPopup
+                                background: Rectangle {
+                                    implicitWidth: speedBtn.width*2
+                                    implicitHeight: speedBtn.height*6
+                                    opacity: 0.8
+                                    color: "#1a1c17"
+                                    border.color: "black"
+                                }
+                                contentItem: Column{
+                                    Column {
+                                        id: buttonLayout
+                                        Repeater{
+                                            model: 6   //有6个按钮
+                                            Button {
+                                                id: speedBtn1
+                                                // 按钮的宽度和高度
+                                                width: 70
+                                                height: 38
+                                                text: index === 0 ? (2.0 + "x") : ((index === 1) ? (1.5 + "x") : (1.5 - (index - 1)*0.25 + "x"))
+                                                palette.buttonText: "white"     //修改文字颜色
+                                                flat: true      //这个按钮将不会显示任何背景或边框，除非有其他样式或属性覆盖了这一设置
+                                                Layout.alignment: Qt.AlignHCenter
+
+                                                // 自定义背景
+                                                background: Rectangle {
+                                                    property color themecolor: "#1a1c17"
+                                                    //从themecolor中提取红绿蓝三种颜色的分量，并给一个透明值为0.1（90%的透明度）
+                                                    property color backgroundColor: Qt.rgba(themecolor.r, themecolor.g, themecolor.b, 0.1)
+                                                    property color hoveredColor: Qt.rgba(themecolor.r, themecolor.g, themecolor.b, 0.7)
+                                                    property color pressedColor: Qt.rgba(themecolor.r, themecolor.g, themecolor.b, 1)
+                                                    border.color: "transparent"
+                                                    opacity: enabled ? 1 : 0.3
+                                                    color: speedBtn1.hovered ? (speedBtn1.pressed ? pressedColor : hoveredColor) : backgroundColor
+                                                    // 根据鼠标是否在按钮上设置背景色
+                                                    border.width: 1
+                                                    Behavior on color {
+                                                        ColorAnimation {
+                                                            duration: 200
+                                                        }
+                                                    }
+                                                 }
+                                                TapHandler {
+                                                    onTapped: {
+                                                        //计算播放速度
+                                                        var speed = index === 0 ? (2.0) : ((index === 1) ? 1.5 : (1.5 - (index - 1)*0.25))
+                                                        mediaPlayer.playbackRate = speed
+                                                        mediaPlayer.play()
+                                                        speedPopup.close()
+                                                   }
+                                                }
+                                             }
+                                          }
+                                }
+                            }
+                        }
                             Button{
                                 icon.source: "qrc:/icons/video_play_control/voice.png"
                                 icon.width: 28
