@@ -38,6 +38,7 @@ Window{
                 videoOutput: videoOutPut
                 audioOutput: AudioOutput { //开启视频的声音
                     id: audio
+                    volume: volumeSlider.value
                 }
                 onPlayingChanged: {//当视频播放状态发生改变时，触发此事件
                     if(mediaPlayer.playing)
@@ -231,7 +232,7 @@ Window{
                               }
                             }
 
-                            Popup {
+                            Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
                                 id: speedPopup
                                 background: Rectangle {
                                     implicitWidth: speedBtn.width*2
@@ -264,8 +265,8 @@ Window{
                                                     property color pressedColor: Qt.rgba(themecolor.r, themecolor.g, themecolor.b, 1)
                                                     border.color: "transparent"
                                                     opacity: enabled ? 1 : 0.3
-                                                    color: speedBtn1.hovered ? (speedBtn1.pressed ? pressedColor : hoveredColor) : backgroundColor
                                                     // 根据鼠标是否在按钮上设置背景色
+                                                    color: speedBtn1.hovered ? (speedBtn1.pressed ? pressedColor : hoveredColor) : backgroundColor
                                                     border.width: 1
                                                     Behavior on color {
                                                         ColorAnimation {
@@ -287,7 +288,9 @@ Window{
                                 }
                             }
                         }
+
                             Button{
+                                id: volumeBtn
                                 icon.source: "qrc:/icons/video_play_control/voice.png"
                                 icon.width: 28
                                 icon.height: 28
@@ -296,7 +299,73 @@ Window{
                                     anchors.fill: parent
                                     color: "black"
                                 }
+
+                                TapHandler {
+                                    onTapped: {
+                                        volumePopup.x = volumeBtn.x + volumeBtn.width/2 - volumePopup.width/2
+                                        volumePopup.y = volumeBtn.y - volumeBtn.height*3 - 15
+                                        volumePopup.open()
+                                    }
+                                }
                             }
+
+                            Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
+                                id: volumePopup
+                                background: Rectangle {
+                                    implicitWidth: volumeSlider.width + 20
+                                    implicitHeight: volumeSlider.height + 30
+                                    opacity: 0.8
+                                    color: "#1a1c17"
+                                    border.color: "black"
+                                }
+                                Text {
+                                    color: "white"
+                                    font.pointSize: 9
+                                    // 使用属性绑定和JavaScript的Math.round函数来格式化数字为整数(通过Math.round()四舍五入到最接近的整数)
+                                    text: Math.round(volumeSlider.value * 100).toString()
+                                }
+                                Slider {
+                                    id:volumeSlider
+                                    orientation: Qt.Vertical
+                                    x: volumeSlider.leftPadding + 3
+                                    y: volumeSlider.topPadding + volumeSlider.availableHeight / 2 - height / 2 + 15
+                                    width: 5
+                                    stepSize: 0.01
+                                    value: 0.5
+                                    snapMode: "SnapAlways"
+
+
+                                    background: Rectangle {
+                                        implicitWidth: 100
+                                        implicitHeight: 90
+                                        width: volumeSlider.availableWidth
+                                        height: implicitHeight
+                                        color: "#00aeec"
+                                        radius: 6
+
+                                    Rectangle {
+                                        width: parent.width
+                                        height: volumeSlider.visualPosition*parent.height
+                                        radius: 6
+                                    }
+                            }
+
+                                    //滑块
+                                    handle: Rectangle {
+                                        //滑块位置
+                                        x: volumeSlider.leftPadding - 2
+                                        y: volumeSlider.topPadding + volumeSlider.visualPosition * (volumeSlider.availableHeight - height)
+                                        implicitWidth: 10
+                                        implicitHeight: 10
+                                        radius: 13
+                                        color: control.pressed ? "#f0f0f0" : "#f6f6f6"
+                                        border.color: "#bdbebf"
+                                        }
+                        }
+
+                    }
+
+
                             Button{
                                 icon.source: "qrc:/icons/video_play_control/my.png"
                                 icon.width: 30
