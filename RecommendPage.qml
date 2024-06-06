@@ -34,7 +34,7 @@ GridView {
     function getVideosList() {
         function onReply(reply) { //这里的reply参数，是有networkputils.cpp中的replySignal信号发送传递过来的
             networkHttp.onReplySignal.disconnect(onReply);
-            var recommendVideos = JSON.parse(reply).recommendVideos //将string转成json数据
+            var recommendVideos = JSON.parse(reply) //将string转成json数据
             videoModel.processData(recommendVideos) //将请求到的数据传递给playercontroller的m_videosList
             gridView.model = videoModel
             console.log(gridView.count)

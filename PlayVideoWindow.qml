@@ -1,7 +1,7 @@
 import QtQuick
 import QtMultimedia
 import QtQuick.Layouts
-import QtQuick.Controls 2.5
+import QtQuick.Controls
 
 import mybili //导入从c++注册的qml
 
@@ -34,7 +34,9 @@ Window{
                 id : mediaPlayer
                 source: "http://localhost:3000/videos/recommend/video3.mp4"
                 property int index: 0
+                property int sum: 1
                 playbackRate: 1
+                autoPlay: true
                 videoOutput: videoOutPut
                 audioOutput: AudioOutput { //开启视频的声音
                     id: audio
@@ -51,8 +53,42 @@ Window{
                         console.log("正在播放中")
                         playBtn.icon.source = "qrc:/icons/video_play_control/play.png"
                     }
+                    if(mediaPlayer.position === mediaPlayer.duration)   // 视频播放到最后则自动播放下一条视频
+                    {
+                        if(mediaPlayer.index < sum - 1) {
+                            mediaPlayer.index++
+                            mediaPlayer.source=stackView.currentItem.videoModelAlias.getSource(mediaPlayer.index)
+                            mediaPlayer.play()
+                        }else {
+                            warningPopup.open()
+                            warningTimer.start()
+                        }
+                    }
+
                 }
             }
+
+            Popup {
+                id: warningPopup
+                anchors.centerIn: parent
+                background: Rectangle {
+                    opacity: 0.8
+                    color: "#1a1c17"
+                    border.color: "black"
+                }
+                Text {
+                    color: "white"
+                    text: qsTr("已经是最后一条视频了")
+                }
+
+                Timer {
+                    id :warningTimer
+                    interval: 3000   // warningPopup显示3秒
+                    repeat: false
+                    onTriggered: warningPopup.close()
+                }
+            }
+
             VideoOutput{
                 id: videoOutPut
                 width: parent.width
@@ -203,6 +239,7 @@ Window{
                                         else
                                             durationTime = durationMinutes+":"+durationSeconds
                                     }
+
                                     return processTime + " / " + durationTime//最后返回要显示在上面的时间文本信息
                                 }
                                 color: "#bfbfbf"
@@ -225,8 +262,6 @@ Window{
                                 }
                                 TapHandler {
                                    onTapped: {
-                                    speedPopup.x = speedBtn.x + speedBtn.width/2 - speedPopup.width/2
-                                    speedPopup.y = speedBtn.y - speedBtn.height*6
                                     speedPopup.open()
                                 }
                               }
@@ -234,6 +269,8 @@ Window{
 
                             Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
                                 id: speedPopup
+                                x : speedBtn.x + speedBtn.width/2 - speedPopup.width/2
+                                y : speedBtn.y - speedBtn.height*6
                                 background: Rectangle {
                                     implicitWidth: speedBtn.width*2
                                     implicitHeight: speedBtn.height*6
@@ -251,8 +288,10 @@ Window{
                                                 // 按钮的宽度和高度
                                                 width: 70
                                                 height: 38
-                                                text: index === 0 ? (2.0 + "x") : ((index === 1) ? (1.5 + "x") : (1.5 - (index - 1)*0.25 + "x"))
-                                                palette.buttonText: "white"     //修改文字颜色
+                                                // 计算播放速度
+                                                property double speed: index === 0 ? (2.0) : ((index === 1) ? 1.5 : (1.5 - (index - 1)*0.25))
+                                                text: speed + "x"
+                                                palette.buttonText: speed === mediaPlayer.playbackRate ? "#00aeec" : "white"     //修改文字颜色
                                                 flat: true      //这个按钮将不会显示任何背景或边框，除非有其他样式或属性覆盖了这一设置
                                                 Layout.alignment: Qt.AlignHCenter
 
@@ -277,7 +316,7 @@ Window{
                                                 TapHandler {
                                                     onTapped: {
                                                         //计算播放速度
-                                                        var speed = index === 0 ? (2.0) : ((index === 1) ? 1.5 : (1.5 - (index - 1)*0.25))
+                                                        //var speed = index === 0 ? (2.0) : ((index === 1) ? 1.5 : (1.5 - (index - 1)*0.25))
                                                         mediaPlayer.playbackRate = speed
                                                         mediaPlayer.play()
                                                         speedPopup.close()
@@ -302,8 +341,6 @@ Window{
 
                                 TapHandler {
                                     onTapped: {
-                                        volumePopup.x = volumeBtn.x + volumeBtn.width/2 - volumePopup.width/2
-                                        volumePopup.y = volumeBtn.y - volumeBtn.height*3 - 15
                                         volumePopup.open()
                                     }
                                 }
@@ -311,6 +348,8 @@ Window{
 
                             Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
                                 id: volumePopup
+                                x : volumeBtn.x + volumeBtn.width/2 - volumePopup.width/2
+                                y : volumeBtn.y - volumeBtn.height*3 - 15
                                 background: Rectangle {
                                     implicitWidth: volumeSlider.width + 20
                                     implicitHeight: volumeSlider.height + 30
@@ -358,7 +397,7 @@ Window{
                                         implicitWidth: 10
                                         implicitHeight: 10
                                         radius: 13
-                                        color: control.pressed ? "#f0f0f0" : "#f6f6f6"
+                                        color: volumeSlider.pressed ? "#bdbebf" : "#ffffff"
                                         border.color: "#bdbebf"
                                         }
                         }
@@ -490,9 +529,15 @@ Window{
     function nextVideo(){
         //console.log(stackView.currentItem.videoModelAlias.currentIndex)
         //console.log(stackView.currentItem.gridModelAlias[2])
-        mediaPlayer.index++
-        mediaPlayer.source=stackView.currentItem.videoModelAlias.getSource(mediaPlayer.index)
-        mediaPlayer.play()
+            if(mediaPlayer.index < mediaPlayer.sum - 1) {
+                mediaPlayer.index++
+                mediaPlayer.source=stackView.currentItem.videoModelAlias.getSource(mediaPlayer.index)
+                mediaPlayer.play()
+            }else {
+                warningPopup.open()
+                warningTimer.start()
+            }
+
     }
 
     function previousVideo(){

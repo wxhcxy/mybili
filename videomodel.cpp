@@ -55,7 +55,7 @@ void VideoModel::processData(const QJsonArray &recommendVideos)
             QJsonObject videoObject = videoValue.toObject();
             QUrl imageUrl(videoObject.value("imageUrl").toString());//获取到json数据里名为imageUrl的数据
             QUrl videoUrl(videoObject.value("videoUrl").toString());
-            QString authorName = videoObject.value("anthorName").toString();
+            QString authorName = videoObject.value("authorName").toString();
             QString title = videoObject.value("title").toString();
 
             // 创建 VideoModel 对象并存储到 m_videoList 中

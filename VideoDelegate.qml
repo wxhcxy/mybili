@@ -40,8 +40,8 @@ Frame{
             onTapped: {
                 console.log(model.videoSource)
                 playVideoWindow.videoSource = model.videoSource
-                //获取视频索引
-                playVideoWindow.mediaPlay.index = gridView.model.getIndex(model.videoSource)
+                playVideoWindow.mediaPlay.index = gridView.model.getIndex(model.videoSource)  //获取视频索引
+                playVideoWindow.mediaPlay.sum = gridView.model.rowCount()   //获取视频总个数
                 playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
                 playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
                 playVideoWindow.videoOutPutAlias.forceActiveFocus()//进入播放窗口后，将键盘焦点给播放窗口，控制快进后退等
