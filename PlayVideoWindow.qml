@@ -92,7 +92,7 @@ Window{
             VideoOutput{
                 id: videoOutPut
                 width: parent.width
-                height: parent.height*0.65
+                height: parent.width*0.56
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
                 focus: true

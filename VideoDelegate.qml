@@ -1,3 +1,5 @@
+/*这是一个要复用的组件，为了保证低耦合，请不要在这个文档代码里添加其他文档的对象属性*/
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -7,6 +9,7 @@ import Qt5Compat.GraphicalEffects
 
 Frame{
     property alias textColor: videoText.color//这两行设置键盘焦点在子项的时候更换视频文字颜色
+    property alias selectTapHandler: selectTapHandler
     textColor: focus?"#f351c3":"#000000"//这两行设置键盘焦点在子项的时候更换视频文字颜色
     implicitWidth: (window.width-60)*0.22
     implicitHeight: (window.width-60)*0.2
@@ -37,15 +40,7 @@ Frame{
             }
         }
         TapHandler{
-            onTapped: {
-                console.log(model.videoSource)
-                playVideoWindow.videoSource = model.videoSource
-                playVideoWindow.mediaPlay.index = gridView.model.getIndex(model.videoSource)  //获取视频索引
-                playVideoWindow.mediaPlay.sum = gridView.model.rowCount()   //获取视频总个数
-                playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
-                playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
-                playVideoWindow.videoOutPutAlias.forceActiveFocus()//进入播放窗口后，将键盘焦点给播放窗口，控制快进后退等
-            }
+            id:selectTapHandler
         }
         NumberAnimation {
             id: scaleEnlargeAnimation//放大动画
@@ -105,7 +100,7 @@ Frame{
         height: parent.height*0.2
         anchors.top: videoText.bottom
         anchors.left: parent.left
-        anchors.topMargin: 2
+        anchors.topMargin: 8
         spacing: 0
         Image {
             id: upIcon
@@ -143,21 +138,5 @@ Frame{
 
     //键盘切换Frame选择视频start
     scale: focus ? 1.08 : 1
-    focus: index === 0
-    Keys.onPressed: (event) =>{
-                        switch (event.key) {
-                            case Qt.Key_Return://Qt.Key_Return这个才是回车键Enter
-                            //console.log("enter")
-                            //playSignal(model.videoSource)//发射播放信号，携带视频信息参数
-                            {
-                                console.log(model.videoSource)
-                                playVideoWindow.videoSource = model.videoSource
-                                playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
-                                playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频
-                                playVideoWindow.videoOutPutAlias.forceActiveFocus()//进入播放窗口后，将键盘焦点给播放窗口，控制快进后退等
-                            }
-                            break;
-                        }
-                    }
 
 }
