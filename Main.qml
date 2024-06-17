@@ -80,8 +80,12 @@ ApplicationWindow{
         }
     }
 
-    FindPage{
-        id:findpage
-        anchors.centerIn:parent
+    Component{
+        id:find_Page
+        FindPage{
+            id:findPage
+            Layout.preferredWidth: stackView.width
+            Layout.preferredHeight: window.height-80
+        }
     }
 }

@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Dialogs
 
 ToolBar{
+    property alias findTextFieldAlias: findTextField
     Layout.fillWidth: true
     background: Rectangle{
         anchors.fill: parent
@@ -152,13 +153,20 @@ ToolBar{
         }
 
         TextField{
+            id:findTextField
             Layout.preferredWidth: 200
             Layout.preferredHeight: 32
             color: "red"
             placeholderText: "搜索"
             placeholderTextColor: "#adb6b6"
             onAccepted: {
-                findpage.open()
+                stackView.pop()
+                stackView.push(find_Page)
+                stackView.forceActiveFocus()//将焦点给到stackView上，每个按钮都加了这行代码
+                console.log("stackView.depth: "+stackView.depth)
+                console.log(stackView.currentItem)
+                //findVideo.sendRequest("recommend?authorName=侥幸哥萧炎")
+                //findpage.open()
                 console.log(text)//按enter键后，会打印当前TextField中输入的文本text
             }
         }
