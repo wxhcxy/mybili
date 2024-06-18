@@ -24,6 +24,7 @@ Window{
         anchors.fill: parent
         spacing: 0
         Item {
+            id: leftItem
             Layout.preferredWidth: parent.width*0.7
             Layout.preferredHeight:  parent.height
             Rectangle{//设置播放页左半部分的背景颜色
@@ -102,8 +103,16 @@ Window{
                     onTapped: {
                         mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                     }
+                    onDoubleTapped: {
+                        // 还没发现更好的办法实现全屏
+                        rightItem.z = -1
+                        leftItem.width = videoWindow.width
+                        leftItem.height = videoWindow.height
+                        // leftItem.anchors.fill = videoWindow
+                        videoWindow.showFullScreen()
+                    }
                 }
-                Keys.onPressed: (event) =>{//键盘快进退和暂停
+                Keys.onPressed: (event) =>{     //键盘快进退、暂停、音量调节
                                     if(event.key === Qt.Key_Space){
                                         if(mediaPlayer.playing)
                                         {
@@ -117,19 +126,58 @@ Window{
                                         //因为用下面这行代码会显示一个js箭头函数的警告，所以改用上面的代码
                                         //mediaPlayer.playing ? mediaPlayer.pause() : mediaPlayer.play()
                                     }
-                                    if (event.key=== Qt.Key_Right){
+                                    if (event.key=== Qt.Key_Right){   //快进
                                         mediaPlayer.setPosition(mediaPlayer.position+2000)
                                     }
-                                    if (event.key=== Qt.Key_Left){
+                                    if (event.key=== Qt.Key_Left){    //后退
                                         mediaPlayer.setPosition(mediaPlayer.position-2000)
                                     }
-
+                                    if (event.key === Qt.Key_Down){   //降低音量
+                                        focus = volumeSlider
+                                        volumeSlider.value = volumeSlider.value - 0.05
+                                        audio.volume = volumeSlider.value
+                                        hintPopup.open()
+                                        hintTimer.start()
+                                        focus = videoOutPut
+                                    }
+                                    if (event.key === Qt.Key_Up){    //提高音量
+                                        focus = volumeSlider
+                                        volumeSlider.value = volumeSlider.value + 0.05
+                                        audio.volume = volumeSlider.value
+                                        hintPopup.open()
+                                        hintTimer.start()
+                                        focus = videoOutPut
+                                    }
+                                    if (event.key === Qt.Key_Escape){  //退出全屏
+                                        console.log("Esc")
+                                        videoWindow.showNormal()
+                                    }
                                 }
             }
 
+            Popup {
+                id: hintPopup
+                anchors.centerIn: parent
+                background: Rectangle {
+                    opacity: 0.8
+                    color: "#1a1c17"
+                    border.color: "black"
+                }
+                Text {
+                    color: "white"
+                    font.pointSize: 16
+                    // 使用属性绑定和JavaScript的Math.round函数来格式化数字为整数(通过Math.round()四舍五入到最接近的整数)
+                    text: Math.round(volumeSlider.value * 100).toString() + "%"
+                }
+                Timer {
+                    id: hintTimer
+                    interval: 2000   // hintPopup显示2秒
+                    repeat: false
+                    onTriggered: hintPopup.close()
+                }
+            }
 
-
-            Rectangle{
+            Rectangle {
                 width: parent.width
                 anchors.top: videoOutPut.bottom
                 anchors.bottom:parent.bottom
@@ -265,6 +313,16 @@ Window{
                                     speedPopup.open()
                                 }
                               }
+                                HoverHandler{
+                                    onHoveredChanged: {
+                                        let isBtnHovered = speedBtn.hovered ? true : false
+                                        if(isBtnHovered){
+                                            speedPopup.open()
+                                        } else if(!isBtnHovered){
+                                            speedTimer.start()    // 显示三秒
+                                        }
+                                    }
+                                }
                             }
 
                             Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
@@ -278,6 +336,13 @@ Window{
                                     color: "#1a1c17"
                                     border.color: "black"
                                 }
+                                Timer {
+                                    id: speedTimer
+                                    interval: 3000
+                                    repeat: false
+                                    onTriggered: speedPopup.close()
+                                }
+
                                 contentItem: Column{
                                     Column {
                                         id: buttonLayout
@@ -344,6 +409,17 @@ Window{
                                         volumePopup.open()
                                     }
                                 }
+
+                                HoverHandler{
+                                    onHoveredChanged: {
+                                        let isBtnHovered = volumeBtn.hovered ? true : false
+                                        if(isBtnHovered){
+                                            volumePopup.open()
+                                        } else if(!isBtnHovered){
+                                            volumeTimer.start()    // 显示三秒
+                                        }
+                                    }
+                                }
                             }
 
                             Popup {  //Popup主要用于在屏幕上弹出一个对话框或浮动窗口，实现用户界面的交互和反馈。
@@ -373,7 +449,6 @@ Window{
                                     value: 0.5
                                     snapMode: "SnapAlways"
 
-
                                     background: Rectangle {
                                         implicitWidth: 100
                                         implicitHeight: 90
@@ -401,9 +476,36 @@ Window{
                                         border.color: "#bdbebf"
                                         }
                         }
-
+                                Timer {
+                                    id: volumeTimer
+                                    interval: 3000     // 显示3秒
+                                    repeat: false
+                                    onTriggered: volumePopup.close()
+                                }
                     }
 
+                            Button{
+                                icon.source: "qrc:/icons/video_play_control/fullScreen.png"
+                                icon.width: 30
+                                icon.height: 30
+                                Layout.alignment: Qt.AlignVCenter//让按钮在ColumnLayout中垂直居中
+                                background: Rectangle{
+                                    anchors.fill: parent
+                                    color: "black"
+                                }
+
+                                // 目前还没发现更好的办法全屏
+                                TapHandler {
+                                    onTapped: {
+                                        rightItem.z = -1
+                                        leftItem.width = videoWindow.width
+                                        leftItem.height = videoWindow.height
+                                        // leftItem.anchors.fill = videoWindow
+                                        videoWindow.showFullScreen()
+                                        videoOutPut.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
+                                    }
+                                }
+                            }
 
                             Button{
                                 icon.source: "qrc:/icons/video_play_control/my.png"
@@ -421,9 +523,10 @@ Window{
                 }
             }
 
-        }
+        }     
 
         /*播放窗口右侧显示内容，本地视频列表start*/
+
         Item {
             id:rightItem
             Layout.preferredWidth: parent.width*0.28
@@ -439,8 +542,8 @@ Window{
                 sourceComponent: networkVideo//默认右侧加载空项。本地播放时，改变sourceComponent的值，从而加载本地视频列表项
                 onLoaded: videoProcessSlider.forceActiveFocus()//点击按钮后，将焦点给slider,这样键盘才可以继续控制快退和暂停等
             }
-
         }
+
         Component{  //右侧网络视频组件
             id:networkVideo
             Item {
@@ -519,6 +622,7 @@ Window{
         /*播放窗口右侧显示内容，本地视频列表end*/
 
     }
+
     Connections{    //这个用来连接loaderLocalVideo信号，在点击本地视频后，修改Loader加载的视图,播放窗口右侧显示选择的本地视频列表
         target: videoWindow
         function onLoaderLocalVideo(){

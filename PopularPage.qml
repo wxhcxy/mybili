@@ -22,7 +22,7 @@ GridView {
         selectTapHandler.onTapped: {
             console.log(model.videoSource)
             playVideoWindow.videoSource = model.videoSource
-            playVideoWindow.mediaPlay.index = gridView.model.getIndex(model.videoSource)  //获取视频索引
+            playVideoWindow.mediaPlay.index = index      // gridView.model.getIndex(model.videoSource)  //获取视频索引
             playVideoWindow.mediaPlay.sum = gridView.model.rowCount()   //获取视频总个数
             playVideoWindow.show()    //playVideo是在Main.qml里用的自定义的PlayVideoView
             playVideoWindow.mediaPlay.play()//这一行代码，实现效果点击视频后弹出的窗口立马自动播放视频

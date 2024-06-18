@@ -68,25 +68,20 @@ void VideoModel::processData(const QJsonArray &recommendVideos)
 }
 
 //获取索引
-int VideoModel::getIndex(QUrl videoSource)
-{
-    for(int index = 0; index < m_videoList.size(); index++)
-    {
-        VideoData* videoData = m_videoList.at(index);
-        if(videoData->videoSource() == videoSource)
-            return index;
-    }
-    return -1;
-}
+// int VideoModel::getIndex(QUrl videoSource)
+// {
+//     for(int index = 0; index < m_videoList.size(); index++)
+//     {
+//         VideoData* videoData = m_videoList.at(index);
+//         if(videoData->videoSource() == videoSource)
+//             return index;
+//     }
+//     return -1;
+// }
 
 //获取视频source
 QUrl VideoModel::getSource(int index)
 {
-    VideoData* videoData = m_videoList.at(index);
+    VideoData *videoData = m_videoList.at(index);
     return videoData->videoSource();
-
 }
-
-
-
-
